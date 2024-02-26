@@ -1,0 +1,74 @@
+package swaglabs;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class FilterDropdown {
+
+	public static void main(String[] args) throws Exception {
+		System.setProperty("webdriver.chrome.driver", "C:\\Users\\DRS\\eclipse-workspace2\\SeleniumPractice\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		driver.get("https://www.saucedemo.com/");
+		driver.manage().window().maximize();
+		
+		driver.findElement(By.id("user-name")).sendKeys("standard_user");
+		driver.findElement(By.id("password")).sendKeys("secret_sauce");
+		
+		driver.findElement(By.id("login-button")).click();
+		
+		
+		// Filter section
+		
+		WebElement filter = driver.findElement(By.className("product_sort_container"));
+		Select product_sort_container = new Select(filter);
+		Thread.sleep(3000);
+		product_sort_container.selectByVisibleText("Price (low to high)");
+		
+		//Adding the product to the cart
+		driver.findElement(By.id("item_2_title_link")).click();
+		driver.findElement(By.id("add-to-cart-sauce-labs-onesie")).click();
+		Thread.sleep(3000);
+		
+		//Removing the product from the cart
+		driver.findElement(By.id("remove-sauce-labs-onesie")).click();
+		
+		//Going back to products section
+		driver.findElement(By.id("back-to-products")).click();
+		
+		//Adding other product to the cart
+		driver.findElement(By.id("item_1_title_link")).click();
+		
+		Thread.sleep(3000);
+		
+		driver.findElement(By.id("add-to-cart-sauce-labs-bolt-t-shirt")).click();
+		
+		Thread.sleep(3000);
+		
+		
+		driver.findElement(By.xpath("//a[@class='shopping_cart_link']")).click();
+		
+		Thread.sleep(3000);
+		
+		driver.findElement(By.xpath("//button[@data-test='checkout']")).click();
+		
+		//Check out information
+		driver.findElement(By.id("first-name")).sendKeys("ravi");
+		Thread.sleep(3000);
+		driver.findElement(By.id("last-name")).sendKeys("sastry");
+		Thread.sleep(3000);
+		
+		driver.findElement(By.xpath("//input[@name='postalCode']")).sendKeys("0000");
+		
+		Thread.sleep(3000);
+		
+		driver.findElement(By.xpath("//input[@name='continue']")).click();
+		driver.findElement(By.xpath("//button[@name='finish']")).click();
+		
+		
+		driver.findElement(By.id("back-to-products")).click();
+	}
+
+}
